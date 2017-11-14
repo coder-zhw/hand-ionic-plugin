@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var cleanCss = require('gulp-clean-css');
 var rename = require('gulp-rename');
+var runSequence = require('gulp-run-sequence');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -59,3 +60,8 @@ gulp.task('plugin-html', function (done) {
 
 
 gulp.task('build-plugin', ['plugin-js', 'plugin-sass', 'plugin-html']);
+
+gulp.task('release-plugin', function(done){
+  dist = 'release';
+  runSequence('build-plugin',done);
+});
