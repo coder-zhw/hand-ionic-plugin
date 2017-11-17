@@ -11,6 +11,7 @@
     // 背景canvas
     var global = {
       // intervalId:0,
+      officeSet:0,
       width: 0,//获取画布的宽度
       height: 0,//获取画布的高度
       canvas: '',
@@ -46,7 +47,7 @@
     function touchMove() {
       var e = event.touches[0];
       // console.log('touchMove');
-      global.point = setPoint(e.clientX, e.clientY);
+      global.point = setPoint(e.clientX, e.clientY-global.officeSet);
       //$pos_display.innerHTML = '你上一点鼠标的位置为(' + point.x + ',' + point.x + ').<br/>你当前鼠标的位置为(' + next_point.x + ',' + next_point.x + ')';//更新当前鼠标点击的位置
       draw(global.context);
       global.cut++;
@@ -161,6 +162,7 @@
         global.canvas = $scope.modal.el.getElementsByClassName('hms-sign-cav-bg')[0];
         signNode = $scope.modal.el.getElementsByClassName('hms-sign-cav')[0];
         global.context = global.canvas.getContext('2d');//获取画布上下文
+        global.officeSet = $scope.modal.el.getElementsByClassName('bar-header')[0].clientHeight;
         global.width = global.canvas.width = content.clientWidth;//获取画布的宽度'375';//
         global.height = global.canvas.height = content.clientHeight;//获取画布的高度'579';//
         config.bgColor = config.bgColor || '#FFFFFF'; // 设置画布的背景颜色
@@ -174,7 +176,7 @@
         global.canvas.addEventListener('touchstart', touchStart, false);
         global.canvas.addEventListener('touchmove', touchMove, false);
         global.canvas.addEventListener('touchend', touchEnd, false);
-        $scope.intervalId = setInterval(loopPoint, 10);
+        $scope.intervalId = setInterval(loopPoint, 1);
       }
       function closeSign(){
         $scope.modal.hide();
